@@ -105,8 +105,9 @@ nav.scrolled .nav-links a,nav.scrolled .nav-social{color:var(--brown-md)}
 .lr-meta-item{display:flex;flex-direction:column}
 .lr-meta-val{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:200;color:var(--terra);line-height:1}
 .lr-meta-lbl{font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--brown-lt);margin-top:.2rem}
-.reel-embed-wrap{position:relative;border-radius:20px;overflow:hidden;background:var(--dark);box-shadow:0 24px 64px var(--shadow);aspect-ratio:9/16;max-height:520px}
+.reel-embed-wrap{position:relative;border-radius:20px;overflow:hidden;background:var(--dark);box-shadow:0 24px 64px var(--shadow);min-height:520px;display:flex;align-items:center;justify-content:center}
 .reel-embed-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+#reel-ig-embed .instagram-media{margin:0 auto!important;border-radius:16px!important}
 .reel-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:var(--dark-warm);border:1px solid rgba(247,240,230,.08);border-radius:20px}
 .reel-placeholder span{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:200;color:rgba(247,240,230,.4);font-style:italic}
 .reel-placeholder small{font-size:.7rem;color:rgba(247,240,230,.2);letter-spacing:.1em;text-transform:uppercase}
@@ -330,10 +331,9 @@ footer p{font-size:.75rem;color:var(--brown-md);font-weight:300}
     <div class="hero-tagline">Stay Curious. — Pune, 2026</div>
     <h1 class="hero-name">Prasad<br/><em>Sonsale.</em></h1>
     <p class="hero-typewriter" id="typewriter-text">&nbsp;<span class="cursor"></span></p>
-    <!-- CORRECT -->
     <div class="hero-cta-row">
-      <button class="btn-light" ...>Explore Video Vaults</button>
-      <a class="btn-ghost" ...>Follow on Instagram</a>
+      <button class="btn-light" onclick="go('posts')">Explore Video Vaults</button>
+      <a class="btn-ghost" href="https://www.instagram.com/_prasad.sonsale_" target="_blank">Follow on Instagram</a>
     </div>
     <div class="hero-scroll" onclick="document.getElementById('live-anchor').scrollIntoView({behavior:'smooth'})">
       <div class="scroll-line"></div>
@@ -615,10 +615,10 @@ footer p{font-size:.75rem;color:var(--brown-md);font-weight:300}
       <!-- LATEST REEL -->
       <div class="panel">
         <h3>🎬 Latest Reel Feature</h3>
-        <p class="panel-desc">The featured reel on the homepage. Use an Instagram embed URL (from the reel's share → Embed option).</p>
+        <p class="panel-desc">The featured reel on the homepage. On Instagram: open your reel → ··· → Embed → copy the full embed code (the blockquote + script block). Paste the whole thing below.</p>
         <div class="fg"><label>Reel Title</label><input type="text" id="lr-title-inp" placeholder="e.g. They Came Back"/></div>
         <div class="fg"><label>Short Description</label><textarea id="lr-desc-inp" placeholder="One line about what this reel is about..."></textarea></div>
-        <div class="fg"><label>Instagram Reel Embed URL (instagram.com/p/XXXXX/embed)</label><input type="url" id="lr-embed-inp" placeholder="https://www.instagram.com/p/XXXXX/embed/"/></div>
+        <div class="fg"><label>Instagram Embed Code (paste full blockquote + script)</label><textarea id="lr-embed-inp" placeholder="&lt;blockquote class=&quot;instagram-media&quot;...&gt;...&lt;/blockquote&gt;&#10;&lt;script async src=&quot;//www.instagram.com/embed.js&quot;&gt;&lt;/script&gt;" style="min-height:120px;font-size:.78rem;font-family:monospace"></textarea></div>
         <div class="three-field-row">
           <div class="fg"><label>Views</label><input type="text" id="lr-views-inp" placeholder="2,219"/></div>
           <div class="fg"><label>Saves</label><input type="text" id="lr-saves-inp" placeholder="7"/></div>
@@ -770,6 +770,7 @@ window.addEventListener('load',()=>{
 // ── UPDATE HOME ───────────────────────────────────────
 function updateHome(){
   const d=load();
+  try{
   // live strip
   const ls=d.liveStatus||{};
   const dayNum=ls.day||challengeDayAuto();
@@ -805,22 +806,33 @@ function updateHome(){
   if(lr.views)document.getElementById('lr-views').textContent=lr.views;
   if(lr.saves)document.getElementById('lr-saves').textContent=lr.saves;
   if(lr.shares)document.getElementById('lr-shares').textContent=lr.shares;
-  if(lr.embedUrl){
-    document.getElementById('reel-embed-container').innerHTML=
-      '<iframe src="'+lr.embedUrl+'" allowfullscreen scrolling="no" allowtransparency="true"></iframe>';
+  if(lr.embedCode){
+    const container=document.getElementById('reel-embed-container');
+    // Remove placeholder
+    container.innerHTML='<div id="reel-ig-embed" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:auto;padding:1rem"></div>';
+    document.getElementById('reel-ig-embed').innerHTML=lr.embedCode;
+    // Load Instagram embed script if not already loaded
+    if(!document.getElementById('ig-embed-script')){
+      const s=document.createElement('script');s.id='ig-embed-script';
+      s.src='//www.instagram.com/embed.js';s.async=true;
+      document.body.appendChild(s);
+    } else if(window.instgrm){
+      window.instgrm.Embeds.process();
+    }
   }
-  // articles
+  }catch(e){console.warn('updateHome partial error:',e)}
+  // always render these regardless of other errors
   renderArticles(d);
-  // photos
   renderPhotos(d);
-  // run log
   renderRunLog(d);
 }
 
 // ── ARTICLES ──────────────────────────────────────────
 function renderArticles(d){
+  const data=d||load();
   const grid=document.getElementById('articles-grid');
-  const arts=(d.articles||[]).slice(0,3);
+  if(!grid)return;
+  const arts=(data.articles||[]).slice(0,3);
   if(!arts.length){grid.innerHTML='<div class="articles-empty">No articles yet. Add them from the Admin panel.</div>';return}
   grid.innerHTML=arts.map((a,i)=>`
     <a class="article-card" href="${a.url||'#'}" target="_blank" rel="noopener">
@@ -834,8 +846,10 @@ function renderArticles(d){
 
 // ── PHOTOS ────────────────────────────────────────────
 function renderPhotos(d){
+  const data=d||load();
   const grid=document.getElementById('photo-grid');
-  const photos=d.photos||[];
+  if(!grid)return;
+  const photos=data.photos||[];
   if(!photos.length){grid.innerHTML='<div class="photos-empty">No photos yet. Add photo URLs from the Admin panel.</div>';return}
   grid.innerHTML=photos.map(p=>`
     <div class="photo-item">
@@ -847,8 +861,10 @@ function renderPhotos(d){
 
 // ── RUN LOG ───────────────────────────────────────────
 function renderRunLog(d){
-  const weeks=d.runWeeks||[];
+  const data=d||load();
+  const weeks=data.runWeeks||[];
   const container=document.getElementById('run-weeks-container');
+  if(!container)return;
   if(!weeks.length){container.innerHTML='<div style="color:rgba(247,240,230,.3);font-size:.875rem;font-weight:300">Update weekly running data from the Admin panel.</div>';return}
   const maxKm=Math.max(...weeks.map(w=>w.km));
   container.innerHTML=weeks.slice(-5).map(w=>`
@@ -924,7 +940,7 @@ function saveLatestReel(){
   d.latestReel={
     title:document.getElementById('lr-title-inp').value,
     desc:document.getElementById('lr-desc-inp').value,
-    embedUrl:document.getElementById('lr-embed-inp').value,
+    embedCode:document.getElementById('lr-embed-inp').value,
     views:document.getElementById('lr-views-inp').value,
     saves:document.getElementById('lr-saves-inp').value,
     shares:document.getElementById('lr-shares-inp').value
@@ -1034,7 +1050,7 @@ function fillAdminInputs(){
   const lr=d.latestReel||{};
   document.getElementById('lr-title-inp').value=lr.title||'';
   document.getElementById('lr-desc-inp').value=lr.desc||'';
-  document.getElementById('lr-embed-inp').value=lr.embedUrl||'';
+  document.getElementById('lr-embed-inp').value=lr.embedCode||'';
   document.getElementById('lr-views-inp').value=lr.views||'';
   document.getElementById('lr-saves-inp').value=lr.saves||'';
   document.getElementById('lr-shares-inp').value=lr.shares||'';
