@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Prasad Sonsale — Stay Curious.</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,200;1,9..144,300;1,9..144,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --cream:#F7F0E6;--cream-dk:#EDE3D5;--cream-deep:#E4D5C2;
+  --brown:#2B1A0E;--brown-md:#5C3A22;--brown-lt:#8B6244;
+  --terra:#C4603A;--terra-lt:#E8876A;--terra-dk:#9E4526;
+  --gold:#D4A843;--gold-dk:#A8822E;
+  --sage:#7A8C6E;
+  --card:#FDF9F4;--border:#DDD0BF;--shadow:rgba(43,26,14,0.09);
+  --dark:#1C1C1C;--dark-warm:#211E1B;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);min-height:100vh;line-height:1.6;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:9000}
+
+/* ── NAV ─────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,border-color .4s}
+nav.scrolled{background:rgba(247,240,230,0.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-links{list-style:none;display:flex;gap:2.5rem}
+.nav-links a,.nav-social{text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);transition:color .2s;cursor:pointer}
+nav.scrolled .nav-links a,nav.scrolled .nav-social{color:var(--brown-md)}
+.nav-links a:hover,.nav-social:hover{color:var(--terra)!important}
+.nav-right{display:flex;gap:1.5rem;align-items:center}
+
+/* ── VIEWS ───────────────────────────────────────── */
+.view{display:none}
+.view.active{display:block;animation:fadeUp .45s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── HERO ────────────────────────────────────────── */
+.hero{height:100dvh;min-height:600px;background:var(--dark-warm);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:2rem}
+.hero-grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.06'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(196,96,58,.14) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-55%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero-tagline{font-size:.7rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--terra-lt);margin-bottom:1.75rem;opacity:0;animation:fadeUp .6s .2s ease both}
+.hero-name{font-family:'Fraunces',serif;font-size:clamp(3.5rem,12vw,10rem);font-weight:200;line-height:.92;letter-spacing:-.04em;color:var(--cream);opacity:0;animation:fadeUp .7s .35s ease both}
+.hero-name em{font-style:italic;color:var(--terra-lt)}
+.hero-typewriter{font-size:clamp(.85rem,1.8vw,.95rem);font-weight:300;color:rgba(247,240,230,.45);margin-top:1.75rem;letter-spacing:.04em;min-height:1.5em;opacity:0;animation:fadeUp .6s .55s ease both}
+.cursor{display:inline-block;width:2px;height:1.1em;background:var(--terra-lt);margin-left:2px;vertical-align:middle;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-cta-row{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp .6s .75s ease both}
+.btn-light{background:var(--cream);color:var(--brown);border:none;padding:.8rem 2rem;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:40px;transition:background .2s,transform .15s;text-decoration:none;display:inline-block}
+.btn-light:hover{background:var(--terra-lt);color:white;transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--cream);border:1.5px solid rgba(247,240,230,.28);padding:.8rem 2rem;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:40px;transition:border-color .2s,color .2s,transform .15s;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:var(--terra-lt);color:var(--terra-lt);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp .6s 1.1s ease both;cursor:pointer;z-index:1}
+.hero-scroll span{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(247,240,230,.3)}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,rgba(247,240,230,.35),transparent);animation:scrollPulse 2.2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
+
+/* ── LIVE STATUS STRIP ───────────────────────────── */
+.live-strip{background:var(--brown);border-bottom:1px solid rgba(247,240,230,.07);padding:1rem 3rem;display:flex;align-items:center;gap:0;overflow:hidden}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--terra-lt);margin-right:1rem;flex-shrink:0;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+.live-items{display:flex;gap:2.5rem;flex-wrap:wrap;align-items:center}
+.live-item{display:flex;flex-direction:column;align-items:flex-start}
+.live-item-val{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:200;color:var(--cream);line-height:1;letter-spacing:-.02em}
+.live-item-val em{font-style:italic;color:var(--terra-lt)}
+.live-item-lbl{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,240,230,.3);margin-top:.15rem}
+.live-divider{width:1px;height:36px;background:rgba(247,240,230,.08);flex-shrink:0}
+
+/* ── STORY ───────────────────────────────────────── */
+.story-section{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:6rem 3rem;max-width:1100px;margin:0 auto}
+.story-inner{max-width:680px;margin:0 auto}
+.section-label{font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--terra);margin-bottom:1.25rem}
+.story-heading{font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,3.25rem);font-weight:200;line-height:1.08;letter-spacing:-.025em;margin-bottom:2.5rem}
+.story-heading em{font-style:italic;color:var(--terra)}
+.story-body{font-size:1rem;font-weight:300;color:var(--brown-md);line-height:1.88;margin-bottom:1.25rem}
+.timeline{margin:2.5rem 0;display:grid;gap:1.25rem}
+.tl-row{display:flex;gap:1.25rem;align-items:start}
+.tl-date{min-width:110px;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);padding-top:.2rem}
+.tl-text{font-size:.95rem;font-weight:300;color:var(--brown-md);line-height:1.75}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem}
+.tag{background:var(--cream-dk);border:1px solid var(--border);padding:.3rem .9rem;border-radius:20px;font-size:.73rem;font-weight:500;color:var(--brown-md)}
+
+/* ── RIGHT NOW ───────────────────────────────────── */
+.right-now{background:var(--dark-warm);padding:5rem 3rem;position:relative;overflow:hidden}
+.right-now::before{content:'RIGHT NOW';position:absolute;top:2.5rem;right:3rem;font-family:'Fraunces',serif;font-size:6rem;font-weight:200;color:rgba(247,240,230,.025);letter-spacing:-.04em;line-height:1;pointer-events:none;white-space:nowrap}
+.rn-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
+.rn-card{background:rgba(247,240,230,.04);border:1px solid rgba(247,240,230,.08);border-radius:20px;padding:2rem}
+.rn-card-label{font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(247,240,230,.3);margin-bottom:1rem}
+.rn-card-val{font-family:'Fraunces',serif;font-size:clamp(1.5rem,4vw,2.25rem);font-weight:200;color:var(--cream);line-height:1.1;letter-spacing:-.025em;margin-bottom:.75rem}
+.rn-card-val em{font-style:italic;color:var(--terra-lt)}
+.rn-card-sub{font-size:.82rem;font-weight:300;color:rgba(247,240,230,.4);line-height:1.65}
+.rn-progress{margin-top:1.25rem}
+.rn-prog-bar{height:3px;background:rgba(247,240,230,.08);border-radius:2px;overflow:hidden;margin-bottom:.5rem}
+.rn-prog-fill{height:100%;background:linear-gradient(90deg,var(--terra),var(--terra-lt));border-radius:2px;transition:width .8s ease}
+.rn-prog-lbl{font-size:.65rem;color:rgba(247,240,230,.28);letter-spacing:.08em}
+
+/* ── LATEST REEL ─────────────────────────────────── */
+.latest-reel{padding:5rem 3rem;max-width:1100px;margin:0 auto}
+.latest-reel-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center}
+.lr-left .section-label{margin-bottom:1.25rem}
+.lr-left h2{font-family:'Fraunces',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:200;line-height:1.1;letter-spacing:-.025em;margin-bottom:1.25rem}
+.lr-left h2 em{font-style:italic;color:var(--terra)}
+.lr-left p{font-size:.925rem;font-weight:300;color:var(--brown-md);line-height:1.8;margin-bottom:2rem}
+.lr-meta{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.lr-meta-item{display:flex;flex-direction:column}
+.lr-meta-val{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:200;color:var(--terra);line-height:1}
+.lr-meta-lbl{font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--brown-lt);margin-top:.2rem}
+.reel-embed-wrap{position:relative;border-radius:20px;overflow:hidden;background:var(--dark);box-shadow:0 24px 64px var(--shadow);aspect-ratio:9/16;max-height:520px}
+.reel-embed-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.reel-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:var(--dark-warm);border:1px solid rgba(247,240,230,.08);border-radius:20px}
+.reel-placeholder span{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:200;color:rgba(247,240,230,.4);font-style:italic}
+.reel-placeholder small{font-size:.7rem;color:rgba(247,240,230,.2);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── SUBSTACK ────────────────────────────────────── */
+.substack-section{background:var(--cream-dk);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 3rem}
+.substack-inner{max-width:1100px;margin:0 auto}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.section-header h2{font-family:'Fraunces',serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:200;letter-spacing:-.025em}
+.section-header h2 em{font-style:italic;color:var(--terra)}
+.section-header a{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);text-decoration:none;border-bottom:1px solid var(--terra);padding-bottom:2px;transition:color .2s}
+.section-header a:hover{color:var(--terra-dk)}
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.article-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2rem;text-decoration:none;color:var(--brown);display:flex;flex-direction:column;gap:.75rem;transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer}
+.article-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px var(--shadow);border-color:var(--terra-lt)}
+.article-num{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra)}
+.article-title{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:300;line-height:1.3;letter-spacing:-.015em}
+.article-desc{font-size:.84rem;font-weight:300;color:var(--brown-md);line-height:1.7}
+.article-meta{font-size:.7rem;color:var(--brown-lt);font-weight:400;margin-top:auto;padding-top:.5rem;border-top:1px solid var(--border)}
+.articles-empty{text-align:center;padding:3rem;color:var(--brown-md);font-size:.875rem;font-weight:300}
+
+/* ── PHOTO GRID ──────────────────────────────────── */
+.photo-section{padding:5rem 3rem;max-width:1100px;margin:0 auto}
+.photo-grid{columns:3;column-gap:1rem;margin-top:2.5rem}
+.photo-item{break-inside:avoid;margin-bottom:1rem;border-radius:14px;overflow:hidden;cursor:pointer;position:relative;display:block}
+.photo-item img{width:100%;display:block;transition:transform .4s ease}
+.photo-item:hover img{transform:scale(1.03)}
+.photo-item-cap{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1rem .9rem;background:linear-gradient(transparent,rgba(43,26,14,.72));color:rgba(247,240,230,.9);font-size:.78rem;font-weight:300;font-style:italic;opacity:0;transition:opacity .3s}
+.photo-item:hover .photo-item-cap{opacity:1}
+.photos-empty{grid-column:1/-1;text-align:center;padding:3rem;color:var(--brown-md);font-size:.875rem;font-weight:300;background:var(--card);border:1px dashed var(--border);border-radius:14px}
+
+/* ── HUB ─────────────────────────────────────────── */
+.hub-section{padding:4rem 3rem;max-width:1100px;margin:0 auto}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem}
+.hub-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.75rem;display:flex;align-items:center;gap:1.25rem;text-decoration:none;color:var(--brown);cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
+.hub-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px var(--shadow);border-color:var(--terra-lt)}
+.hub-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0}
+.hub-icon.yt{background:#FFE8E0}.hub-icon.ig{background:#FFE8F5}.hub-icon.sub{background:#FFF3E0}.hub-icon.doc{background:#E8F0E8}.hub-icon.run{background:#E8F0E8}
+.hub-card h4{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:400;margin-bottom:.2rem}
+.hub-card p{font-size:.78rem;color:var(--brown-md);font-weight:300}
+
+/* ── WHAT YOU FIND / NOT ─────────────────────────── */
+.two-col-split{display:grid;grid-template-columns:1fr 1fr;max-width:1100px;margin:0 auto;border-bottom:1px solid var(--border)}
+.find-item{display:flex;align-items:start;gap:.875rem;padding:.5rem 0}
+.find-icon{font-size:.9rem;flex-shrink:0;margin-top:.1rem}
+.find-text{font-size:.9rem;font-weight:300;color:var(--brown-md);line-height:1.6}
+.find-text strong{font-weight:500;color:var(--brown);display:block;margin-bottom:.15rem;font-size:.88rem}
+
+/* ── QUOTE CARD ──────────────────────────────────── */
+.quote-card{background:var(--brown);border-radius:24px;padding:2.5rem;position:relative;overflow:hidden}
+.quote-card::before{content:'\201C';position:absolute;top:-.5rem;right:1.5rem;font-family:'Fraunces',serif;font-size:9rem;color:rgba(247,240,230,.04);line-height:1;pointer-events:none}
+.quote-card blockquote{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:200;font-style:italic;line-height:1.6;color:var(--cream);margin-bottom:2rem}
+.qc-stats{display:flex;gap:2rem;border-top:1px solid rgba(247,240,230,.1);padding-top:1.5rem}
+.qc-stat span{display:block;font-family:'Fraunces',serif;font-size:2rem;font-weight:300;color:var(--terra-lt);line-height:1;margin-bottom:.25rem}
+.qc-stat small{font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(247,240,230,.32)}
+.qc-peace{margin-top:1.5rem;font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--terra-lt)}
+
+/* ── GOAL STRIP ──────────────────────────────────── */
+.goal-strip{background:var(--terra);padding:3rem;text-align:center;position:relative;overflow:hidden}
+.goal-strip::before{content:'100K';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Fraunces',serif;font-size:14rem;font-weight:200;color:rgba(0,0,0,.08);line-height:1;pointer-events:none;white-space:nowrap}
+.goal-strip-inner{position:relative;z-index:1}
+.goal-strip h3{font-family:'Fraunces',serif;font-size:clamp(1.5rem,5vw,3rem);font-weight:200;color:white;letter-spacing:-.03em;line-height:1.1;margin-bottom:.75rem}
+.goal-strip h3 em{font-style:italic}
+.goal-strip p{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.7);max-width:480px;margin:0 auto 1.5rem;line-height:1.7}
+.goal-counter{display:inline-flex;align-items:baseline;gap:.25rem;background:rgba(0,0,0,.15);border-radius:40px;padding:.6rem 1.75rem;margin-top:.5rem}
+.goal-counter-num{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:200;color:white;line-height:1}
+.goal-counter-lbl{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+/* ── RUNNING LOG ─────────────────────────────────── */
+.run-log{background:var(--dark-warm);padding:4rem 3rem}
+.run-log-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:center}
+.run-log-left .section-label{color:rgba(247,240,230,.3);margin-bottom:1rem}
+.run-log-left h2{font-family:'Fraunces',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:200;color:var(--cream);line-height:1.1;letter-spacing:-.025em}
+.run-log-left h2 em{font-style:italic;color:var(--terra-lt)}
+.run-log-left p{margin-top:1rem;font-size:.9rem;font-weight:300;color:rgba(247,240,230,.4);line-height:1.7}
+.run-weeks{display:grid;gap:.875rem}
+.run-week{display:grid;grid-template-columns:100px 1fr auto;align-items:center;gap:1rem}
+.run-week-label{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,240,230,.3)}
+.run-week-bar-wrap{height:4px;background:rgba(247,240,230,.07);border-radius:2px;overflow:hidden}
+.run-week-bar{height:100%;background:linear-gradient(90deg,var(--terra-dk),var(--terra-lt));border-radius:2px}
+.run-week-km{font-family:'Fraunces',serif;font-size:1rem;font-weight:300;color:var(--terra-lt);white-space:nowrap}
+
+/* ── POSTS VIEW ──────────────────────────────────── */
+.page-hero{background:var(--brown);padding:8rem 3rem 4rem;text-align:center}
+.page-hero h2{font-family:'Fraunces',serif;font-size:clamp(2.5rem,8vw,5.5rem);font-weight:200;color:var(--cream);letter-spacing:-.03em;line-height:1}
+.page-hero h2 em{font-style:italic;color:var(--terra-lt)}
+.page-hero p{margin-top:1rem;font-size:1rem;font-weight:300;color:rgba(247,240,230,.45);max-width:500px;margin-inline:auto}
+.posts-body{max-width:900px;margin:0 auto;padding:3rem 2rem 6rem;display:grid;gap:1.25rem}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:2rem;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;display:flex;justify-content:space-between;align-items:center;gap:1.5rem}
+.post-card:hover{transform:translateY(-3px);box-shadow:0 10px 36px var(--shadow);border-color:var(--terra-lt)}
+.post-card h3{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:300;margin-bottom:.4rem;letter-spacing:-.015em}
+.post-meta{font-size:.75rem;color:var(--brown-md);font-weight:300;display:flex;gap:1rem}
+.post-desc{font-size:.875rem;color:var(--brown-md);font-weight:300;line-height:1.7;margin-top:.5rem}
+.vc-badge{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.vc-num{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:200;color:var(--terra);line-height:1}
+.vc-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--brown-md)}
+.empty-state{text-align:center;padding:5rem 2rem}
+.empty-state .ei{font-size:3rem;opacity:.3;margin-bottom:1rem}
+.empty-state h3{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:200;margin-bottom:.5rem}
+.empty-state p{font-size:.875rem;color:var(--brown-md);font-weight:300}
+
+/* ── SINGLE POST ─────────────────────────────────── */
+.post-view-head{background:var(--brown);padding:8rem 3rem 3.5rem}
+.pv-inner{max-width:800px;margin:0 auto}
+.back-btn{display:inline-flex;align-items:center;gap:.5rem;background:none;border:none;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,240,230,.4);cursor:pointer;margin-bottom:2rem;transition:color .2s;padding:0}
+.back-btn:hover{color:var(--terra-lt)}
+.post-view-head h2{font-family:'Fraunces',serif;font-size:clamp(2rem,7vw,4.5rem);font-weight:200;color:var(--cream);letter-spacing:-.03em;line-height:1.05;max-width:800px}
+.post-view-head .pdesc{font-size:1rem;font-weight:300;color:rgba(247,240,230,.45);margin-top:1rem;max-width:520px;line-height:1.75}
+.share-bar{display:flex;align-items:center;gap:.75rem;margin-top:2rem;flex-wrap:wrap}
+.share-url{background:rgba(247,240,230,.07);border:1px solid rgba(247,240,230,.12);border-radius:8px;padding:.55rem 1rem;font-size:.75rem;color:rgba(247,240,230,.5);font-family:monospace;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.copy-btn{background:var(--terra);color:white;border:none;border-radius:8px;padding:.55rem 1.25rem;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s;white-space:nowrap}
+.copy-btn:hover{background:var(--terra-lt)}
+.videos-body{max-width:800px;margin:0 auto;padding:2.5rem 2rem 6rem;display:grid;gap:1.5rem}
+.video-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.video-card:hover{transform:translateY(-3px);box-shadow:0 10px 36px var(--shadow)}
+.video-embed{position:relative;padding-bottom:56.25%;background:#111}
+.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.video-meta h4{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:300}
+.vnum{font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--terra);white-space:nowrap}
+
+/* ── ADMIN ───────────────────────────────────────── */
+.lock-screen{max-width:420px;margin:10rem auto;padding:2rem;text-align:center}
+.lock-screen h2{font-family:'Fraunces',serif;font-size:2rem;font-weight:200;margin-bottom:.5rem}
+.lock-screen p{font-size:.875rem;color:var(--brown-md);margin-bottom:2rem}
+.lock-form{display:flex;gap:.75rem}
+.admin-wrap{max-width:800px;margin:0 auto;padding:6rem 2rem 6rem}
+.admin-wrap>h2{font-family:'Fraunces',serif;font-size:2.25rem;font-weight:200;margin-bottom:.4rem;letter-spacing:-.02em}
+.admin-wrap>p{font-size:.875rem;color:var(--brown-md);margin-bottom:2.5rem;font-weight:300}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:1.5rem}
+.panel h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:300;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;letter-spacing:-.01em}
+.panel-desc{font-size:.8rem;color:var(--brown-md);margin-top:-.75rem;margin-bottom:1.5rem;font-weight:300;line-height:1.6}
+.fg{margin-bottom:1.25rem}
+label{display:block;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--brown-md);margin-bottom:.45rem}
+input[type=text],input[type=url],input[type=number],textarea{width:100%;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--brown);outline:none;transition:border-color .2s}
+input[type=text]:focus,input[type=url]:focus,input[type=number]:focus,textarea:focus{border-color:var(--terra)}
+textarea{resize:vertical;min-height:75px}
+.btn-terra{background:var(--terra);color:white;border:none;padding:.7rem 1.5rem;font-family:'Jost',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.05em;border-radius:10px;cursor:pointer;transition:background .2s,transform .15s}
+.btn-terra:hover{background:var(--brown);transform:translateY(-1px)}
+.btn-sm{padding:.4rem .9rem;font-size:.75rem;border-radius:8px}
+.admin-list{display:grid;gap:1rem}
+.apc{background:var(--cream);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.apc-head{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;gap:1rem;transition:background .15s}
+.apc-head:hover{background:var(--cream-dk)}
+.apc-title{font-family:'Fraunces',serif;font-size:1rem;font-weight:300}
+.apc-actions{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.icon-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:background .15s;color:var(--brown-md)}
+.icon-btn:hover{background:var(--cream-dk)}
+.icon-btn.del:hover{background:#FFE0D9;border-color:#E88;color:#C33}
+.apc-body{border-top:1px solid var(--border);padding:1.25rem;display:none}
+.apc-body.open{display:block}
+.vi-row{display:flex;align-items:center;gap:.75rem;padding:.6rem .75rem;border-radius:8px;margin-bottom:.5rem;background:var(--card);border:1px solid var(--border)}
+.vi-row .vi-t{flex:1;font-size:.85rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vi-row .vi-n{font-size:.7rem;font-weight:700;color:var(--terra);min-width:28px}
+.add-video-row{display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;margin-top:1rem;align-items:end}
+.add-video-row .fg{margin:0}
+.share-row-admin{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.share-row-admin small{font-size:.7rem;color:var(--brown-md);font-weight:500;white-space:nowrap}
+.share-row-admin code{font-size:.72rem;color:var(--terra);background:var(--cream-dk);padding:.2rem .6rem;border-radius:6px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.two-field-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.three-field-row{display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;align-items:end}
+.three-field-row .fg{margin:0}
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer{border-top:1px solid var(--border);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-name{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:200;letter-spacing:-.01em}
+.footer-name em{font-style:italic;color:var(--terra)}
+footer p{font-size:.75rem;color:var(--brown-md);font-weight:300}
+.sec-divider{border:none;border-top:1px solid var(--border);max-width:1100px;margin:0 auto}
+
+/* ── TOAST ───────────────────────────────────────── */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--brown);color:var(--cream);padding:.75rem 1.75rem;border-radius:40px;font-size:.85rem;font-weight:500;z-index:9100;transition:transform .3s ease;pointer-events:none;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media(max-width:900px){
+  .rn-inner{grid-template-columns:1fr 1fr}
+  .latest-reel-grid{grid-template-columns:1fr}
+  .run-log-inner{grid-template-columns:1fr}
+  .two-col-split{grid-template-columns:1fr!important}
+  .two-col-split>div:first-child{border-right:none!important;border-bottom:1px solid var(--border)}
+  .photo-grid{columns:2}
+}
+@media(max-width:700px){
+  nav{padding:0 1.25rem}
+  .nav-links{gap:1rem}
+  .hero-cta-row{flex-direction:column;align-items:center}
+  .post-card{flex-direction:column;align-items:flex-start}
+  .add-video-row,.three-field-row,.two-field-row{grid-template-columns:1fr}
+  .hub-section,.page-hero,.post-view-head,.posts-body,.videos-body,.story-section,.latest-reel,.substack-section,.photo-section,.hub-section,.run-log,.right-now,.goal-strip{padding-left:1.5rem;padding-right:1.5rem}
+  .live-strip{padding:.875rem 1.5rem;gap:1rem}
+  .live-items{gap:1.5rem}
+  .rn-inner{grid-template-columns:1fr}
+  .photo-grid{columns:1}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <ul class="nav-links">
+    <li><a onclick="go('home')">Home</a></li>
+    <li><a onclick="go('posts')">Video Vaults</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-social" href="https://substack.com/" target="_blank">Substack</a>
+    <a class="nav-social" href="https://www.instagram.com/_prasad.sonsale_" target="_blank">Instagram</a>
+    <a class="nav-social" href="https://www.youtube.com/" target="_blank">YouTube</a>
+    <a class="nav-social" onclick="go('admin')">Admin</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HOME ══════════════ -->
+<div class="view active" id="view-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grain"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-tagline">Stay Curious. — Pune, 2026</div>
+    <h1 class="hero-name">Prasad<br/><em>Sonsale.</em></h1>
+    <p class="hero-typewriter" id="typewriter-text">&nbsp;<span class="cursor"></span></p>
+    <div class="hero-cta-row">
+      <button class="btn-light" onclick="go('posts')">Explore Video Vaults</button>
+      <a class="btn-ghost" href="https://www.instagram.com/_prasad.sonsale_" target="_blank">Follow on Instagram</a>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('live-anchor').scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- LIVE STATUS STRIP -->
+  <div class="live-strip" id="live-anchor">
+    <div class="live-dot"></div>
+    <div class="live-items">
+      <div class="live-item">
+        <div class="live-item-val" id="ls-day">Day <em id="ls-day-num">—</em></div>
+        <div class="live-item-lbl">of 31-day challenge</div>
+      </div>
+      <div class="live-divider"></div>
+      <div class="live-item">
+        <div class="live-item-val"><em id="ls-week">Week 4</em></div>
+        <div class="live-item-lbl">half marathon training</div>
+      </div>
+      <div class="live-divider"></div>
+      <div class="live-item">
+        <div class="live-item-val"><em id="ls-km">42</em> km</div>
+        <div class="live-item-lbl">logged this month</div>
+      </div>
+      <div class="live-divider"></div>
+      <div class="live-item">
+        <div class="live-item-val"><em id="ls-followers">~1K</em></div>
+        <div class="live-item-lbl">instagram followers</div>
+      </div>
+      <div class="live-divider"></div>
+      <div class="live-item">
+        <div class="live-item-val"><em>July 5</em></div>
+        <div class="live-item-lbl"><span id="ls-race-days">—</span> to go</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <div style="background:var(--card);border-bottom:1px solid var(--border)">
+    <div class="story-section" style="border:none;padding-bottom:4rem">
+      <div class="story-inner">
+        <div class="section-label">The story</div>
+        <h2 class="story-heading">I run 5K every morning<br/>without headphones.<br/><em>Not for mindfulness.</em></h2>
+        <p class="story-body">Because it's the only time I can't escape my own thoughts.</p>
+        <p class="story-body">In 2023 I attended a two-month theatre workshop in Pune. I used to run through traffic after office just to reach on time. For the first time in years I felt like myself. Then the workshop ended.</p>
+        <p class="story-body">2024 and 2025 were two completely lost years. Exam prep. Job searching. Oscillating between what I was supposed to do and what I actually wanted to do. Every morning I woke up knowing exactly what I wanted. Every morning I chose everything else instead. Cognitive dissonance doesn't feel like conflict. It feels like numbness.</p>
+        <div class="timeline">
+          <div class="tl-row"><div class="tl-date">Jan 2026</div><p class="tl-text">Stopped the exam prep. Stopped waiting for permission. Started making videos. Started taking photos. Started writing what was actually on my mind.</p></div>
+          <div class="tl-row"><div class="tl-date">Mar 2026</div><p class="tl-text">Committed to posting every single day for 31 days. Not because I had it figured out. Because I was tired of the numbness.</p></div>
+          <div class="tl-row"><div class="tl-date">This website</div><p class="tl-text">Is what that looks like in real time.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT YOU FIND / NOT -->
+    <div class="two-col-split">
+      <div style="padding:3.5rem 3rem;border-right:1px solid var(--border)">
+        <div class="section-label" style="margin-bottom:1.25rem">What you'll find here</div>
+        <div style="display:grid;gap:1rem">
+          <div class="find-item"><div class="find-icon">▸</div><div class="find-text"><strong>Reels</strong>Talking head, running through Pune, vlogs, psychology, philosophy. Shot mostly at night under city lights. Delivered deadpan and honest.</div></div>
+          <div class="find-item"><div class="find-icon">▸</div><div class="find-text"><strong>Substack</strong>Writing that goes deeper than a caption. The thinking behind the content.</div></div>
+          <div class="find-item"><div class="find-icon">▸</div><div class="find-text"><strong>Photography</strong>Pune as I see it on my morning runs. Streets, light, the feeling of a city before it wakes up.</div></div>
+          <div class="find-item"><div class="find-icon">▸</div><div class="find-text"><strong>Video Vaults</strong>Every carousel is inspired by real videos. The source links — all here.</div></div>
+        </div>
+        <div class="tags" style="margin-top:2rem">
+          <span class="tag">Psychology</span><span class="tag">Philosophy</span><span class="tag">Running</span><span class="tag">Pune</span><span class="tag">Cinema</span><span class="tag">Marathi</span>
+        </div>
+      </div>
+      <div style="padding:3.5rem 3rem;display:flex;align-items:center">
+        <div class="quote-card">
+          <blockquote>"Every morning I woke up knowing exactly what I wanted. Every morning I chose everything else instead. My brain was fine with both."</blockquote>
+          <div class="qc-stats">
+            <div class="qc-stat"><span id="qc-videos">0</span><small>Videos posted</small></div>
+            <div class="qc-stat"><span id="qc-days">23</span><small>Days in</small></div>
+            <div class="qc-stat"><span>100K</span><small>The goal</small></div>
+          </div>
+          <div class="qc-peace">✦ Peace.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT NOW -->
+  <div class="right-now">
+    <div class="rn-inner">
+      <div class="rn-card">
+        <div class="rn-card-label">This week's focus</div>
+        <div class="rn-card-val" id="rn-focus">Day <em id="rn-day-num">23</em> / 31</div>
+        <div class="rn-card-sub" id="rn-focus-sub">The 31-day daily posting challenge. Every day at 7–9PM IST. No skips.</div>
+        <div class="rn-progress">
+          <div class="rn-prog-bar"><div class="rn-prog-fill" id="rn-prog-fill" style="width:74%"></div></div>
+          <div class="rn-prog-lbl" id="rn-prog-lbl">74% complete</div>
+        </div>
+      </div>
+      <div class="rn-card">
+        <div class="rn-card-label">Half marathon training</div>
+        <div class="rn-card-val"><em id="rn-training-week">Week 4</em> of 18</div>
+        <div class="rn-card-sub" id="rn-training-sub">Base building phase. 5K every morning, weekend long runs. Race day: July 5, 2026. Target: 21.1 km under 2:30.</div>
+        <div class="rn-progress">
+          <div class="rn-prog-bar"><div class="rn-prog-fill" id="rn-train-fill" style="width:22%"></div></div>
+          <div class="rn-prog-lbl">4 of 18 weeks complete</div>
+        </div>
+      </div>
+      <div class="rn-card">
+        <div class="rn-card-label">Currently reading</div>
+        <div class="rn-card-val" id="rn-reading"><em>Pu La</em> Deshpande</div>
+        <div class="rn-card-sub" id="rn-reading-sub">First time reading Pu La systematically. Something about reading Marathi literature at 5AM hits differently than anything in English.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LATEST REEL -->
+  <div class="latest-reel">
+    <div class="latest-reel-grid">
+      <div class="lr-left">
+        <div class="section-label">Latest Reel</div>
+        <h2 id="lr-title">The reel that went up <em>yesterday.</em></h2>
+        <p id="lr-desc">Add your latest reel from the Admin panel to feature it here with the embed and stats.</p>
+        <div class="lr-meta">
+          <div class="lr-meta-item"><div class="lr-meta-val" id="lr-views">—</div><div class="lr-meta-lbl">Views</div></div>
+          <div class="lr-meta-item"><div class="lr-meta-val" id="lr-saves">—</div><div class="lr-meta-lbl">Saves</div></div>
+          <div class="lr-meta-item"><div class="lr-meta-val" id="lr-shares">—</div><div class="lr-meta-lbl">Shares</div></div>
+        </div>
+        <a id="lr-ig-link" href="https://www.instagram.com/_prasad.sonsale_" target="_blank" class="btn-light" style="font-size:.75rem">View on Instagram →</a>
+      </div>
+      <div>
+        <div class="reel-embed-wrap" id="reel-embed-container">
+          <div class="reel-placeholder">
+            <span>Latest reel</span>
+            <small>Add via Admin panel</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSTACK ARTICLES -->
+  <div class="substack-section">
+    <div class="substack-inner">
+      <div class="section-header">
+        <h2>From <em>Substack.</em></h2>
+        <a href="https://substack.com/" target="_blank">Read all →</a>
+      </div>
+      <div class="articles-grid" id="articles-grid">
+        <div class="articles-empty">No articles yet. Add them from the Admin panel.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUNE PHOTOGRAPHY -->
+  <div class="photo-section">
+    <div class="section-header">
+      <h2>Pune, <em>on foot.</em></h2>
+      <span style="font-size:.75rem;color:var(--brown-lt);font-weight:300">5AM. No headphones. Whatever I see.</span>
+    </div>
+    <div class="photo-grid" id="photo-grid">
+      <div class="photos-empty">No photos yet. Add photo URLs from the Admin panel.</div>
+    </div>
+  </div>
+
+  <!-- RUNNING LOG -->
+  <div class="run-log">
+    <div class="run-log-inner">
+      <div class="run-log-left">
+        <div class="section-label">Running log</div>
+        <h2>Every morning.<br/><em>No exceptions.</em></h2>
+        <p>5K minimum. No headphones. Whatever comes up on the road — that's the content for the day.</p>
+      </div>
+      <div class="run-weeks" id="run-weeks-container">
+        <div style="color:rgba(247,240,230,.3);font-size:.875rem;font-weight:300">Update weekly running data from the Admin panel.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOAL -->
+  <div class="goal-strip">
+    <div class="goal-strip-inner">
+      <h3>100,000 followers by<br/><em>December 31, 2026.</em></h3>
+      <p>Not because the number matters. Because the person who gets there will have become someone who shows up for himself every single day for an entire year.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+        <div class="goal-counter"><span class="goal-counter-num" id="gc-followers">~1,000</span>&nbsp;<span class="goal-counter-lbl">now</span></div>
+        <div class="goal-counter"><span class="goal-counter-num">100,000</span>&nbsp;<span class="goal-counter-lbl">target</span></div>
+        <div class="goal-counter"><span class="goal-counter-num" id="gc-days-left">—</span>&nbsp;<span class="goal-counter-lbl">days left</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUB -->
+  <div class="hub-section">
+    <div class="section-header" style="margin-bottom:2rem">
+      <h2>Find me <em>everywhere.</em></h2>
+    </div>
+    <div class="hub-grid">
+      <a class="hub-card" href="https://www.youtube.com/" target="_blank"><div class="hub-icon yt">▶️</div><div><h4>YouTube</h4><p>Long-form videos</p></div></a>
+      <a class="hub-card" href="https://www.instagram.com/_prasad.sonsale_" target="_blank"><div class="hub-icon ig">📸</div><div><h4>Instagram</h4><p>Reels &amp; carousels daily</p></div></a>
+      <a class="hub-card" href="https://substack.com/" target="_blank"><div class="hub-icon sub">✍️</div><div><h4>Substack</h4><p>Essays &amp; long-form writing</p></div></a>
+      <div class="hub-card" onclick="go('posts')"><div class="hub-icon doc">🗂️</div><div><h4>Video Vaults</h4><p>Videos behind every carousel</p></div></div>
+    </div>
+  </div>
+
+  <hr class="sec-divider"/>
+  <footer>
+    <div class="footer-name">Prasad <em>Sonsale.</em></div>
+    <p>Pune, India — Stay Curious. — Peace.</p>
+  </footer>
+</div>
+
+<!-- ══════════════ POSTS ══════════════ -->
+<div class="view" id="view-posts">
+  <div class="page-hero">
+    <h2>Video <em>Vaults.</em></h2>
+    <p>Every carousel is inspired by videos. One link per post — all of them here.</p>
+  </div>
+  <div class="posts-body" id="posts-grid"></div>
+  <footer><div class="footer-name">Prasad <em>Sonsale.</em></div><p>Stay Curious.</p></footer>
+</div>
+
+<!-- ══════════════ SINGLE POST ══════════════ -->
+<div class="view" id="view-post">
+  <div class="post-view-head">
+    <div class="pv-inner">
+      <button class="back-btn" onclick="go('posts')">← All Posts</button>
+      <h2 id="post-title"></h2>
+      <p class="pdesc" id="post-desc"></p>
+      <div class="share-bar">
+        <div class="share-url" id="share-url"></div>
+        <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+      </div>
+    </div>
+  </div>
+  <div class="videos-body" id="videos-body"></div>
+  <footer><div class="footer-name">Prasad <em>Sonsale.</em></div><p>Stay Curious.</p></footer>
+</div>
+
+<!-- ══════════════ ADMIN ══════════════ -->
+<div class="view" id="view-admin">
+  <div id="admin-lock">
+    <div class="lock-screen">
+      <h2>Admin Panel</h2>
+      <p>Enter your password to manage the site.</p>
+      <div class="lock-form">
+        <input type="text" id="admin-pw" placeholder="Password…" style="flex:1" onkeydown="if(event.key==='Enter')unlock()"/>
+        <button class="btn-terra" onclick="unlock()">Enter</button>
+      </div>
+    </div>
+  </div>
+  <div id="admin-content" style="display:none">
+    <div class="admin-wrap">
+      <h2>Admin Panel</h2>
+      <p>Everything that makes the site feel alive — update it here.</p>
+
+      <!-- LIVE STATUS -->
+      <div class="panel">
+        <h3>📡 Live Status Strip</h3>
+        <p class="panel-desc">Updates the numbers visible right below the hero.</p>
+        <div class="two-field-row">
+          <div class="fg"><label>Challenge Day Override (leave blank = auto from March 1)</label><input type="number" id="ls-day-inp" placeholder="Auto-calculated"/></div>
+          <div class="fg"><label>Training Week (e.g. "Week 4")</label><input type="text" id="ls-week-inp" placeholder="Week 4"/></div>
+        </div>
+        <div class="two-field-row">
+          <div class="fg"><label>KM Logged This Month</label><input type="number" id="ls-km-inp" placeholder="42"/></div>
+          <div class="fg"><label>Instagram Followers</label><input type="text" id="ls-followers-inp" placeholder="~1K"/></div>
+        </div>
+        <button class="btn-terra" onclick="saveLiveStatus()">Update Live Status</button>
+      </div>
+
+      <!-- RIGHT NOW -->
+      <div class="panel">
+        <h3>🎯 Right Now Section</h3>
+        <p class="panel-desc">The three dark cards mid-page.</p>
+        <div class="fg"><label>Currently Reading</label><input type="text" id="rn-reading-inp" placeholder="e.g. Pu La Deshpande"/></div>
+        <div class="fg"><label>Reading Note</label><textarea id="rn-reading-sub-inp" placeholder="One line about what you're reading and why it matters right now..."></textarea></div>
+        <div class="fg"><label>Focus This Week</label><input type="text" id="rn-focus-inp" placeholder="e.g. Day 23 / 31"/></div>
+        <div class="fg"><label>Focus Note</label><textarea id="rn-focus-sub-inp" placeholder="What you're working on right now..."></textarea></div>
+        <button class="btn-terra" onclick="saveRightNow()">Update Right Now</button>
+      </div>
+
+      <!-- LATEST REEL -->
+      <div class="panel">
+        <h3>🎬 Latest Reel Feature</h3>
+        <p class="panel-desc">The featured reel on the homepage. Use an Instagram embed URL (from the reel's share → Embed option).</p>
+        <div class="fg"><label>Reel Title</label><input type="text" id="lr-title-inp" placeholder="e.g. They Came Back"/></div>
+        <div class="fg"><label>Short Description</label><textarea id="lr-desc-inp" placeholder="One line about what this reel is about..."></textarea></div>
+        <div class="fg"><label>Instagram Reel Embed URL (instagram.com/p/XXXXX/embed)</label><input type="url" id="lr-embed-inp" placeholder="https://www.instagram.com/p/XXXXX/embed/"/></div>
+        <div class="three-field-row">
+          <div class="fg"><label>Views</label><input type="text" id="lr-views-inp" placeholder="2,219"/></div>
+          <div class="fg"><label>Saves</label><input type="text" id="lr-saves-inp" placeholder="7"/></div>
+          <div class="fg"><label>Shares</label><input type="text" id="lr-shares-inp" placeholder="11"/></div>
+        </div>
+        <button class="btn-terra" onclick="saveLatestReel()">Update Latest Reel</button>
+      </div>
+
+      <!-- SUBSTACK ARTICLES -->
+      <div class="panel">
+        <h3>✍️ Substack Articles</h3>
+        <p class="panel-desc">Shows 3 latest on the homepage.</p>
+        <div class="fg"><label>Article Title</label><input type="text" id="art-title-inp" placeholder="e.g. Why I Stopped Preparing"/></div>
+        <div class="fg"><label>Short Description</label><textarea id="art-desc-inp" placeholder="One or two lines about the article..."></textarea></div>
+        <div class="two-field-row">
+          <div class="fg"><label>Date</label><input type="text" id="art-date-inp" placeholder="e.g. March 2026"/></div>
+          <div class="fg"><label>Substack URL</label><input type="url" id="art-url-inp" placeholder="https://substack.com/..."/></div>
+        </div>
+        <button class="btn-terra" onclick="addArticle()">+ Add Article</button>
+        <div id="articles-admin-list" style="margin-top:1.5rem;display:grid;gap:.75rem"></div>
+      </div>
+
+      <!-- PHOTOS -->
+      <div class="panel">
+        <h3>📷 Pune Photography</h3>
+        <p class="panel-desc">Add photo URLs to the grid. Use any direct image URL.</p>
+        <div class="two-field-row">
+          <div class="fg"><label>Image URL</label><input type="url" id="photo-url-inp" placeholder="https://..."/></div>
+          <div class="fg"><label>Caption (optional)</label><input type="text" id="photo-cap-inp" placeholder="5AM. Shaniwar Wada."/></div>
+        </div>
+        <button class="btn-terra" onclick="addPhoto()">+ Add Photo</button>
+        <div id="photos-admin-list" style="margin-top:1.5rem;display:grid;gap:.75rem"></div>
+      </div>
+
+      <!-- RUNNING LOG -->
+      <div class="panel">
+        <h3>🏃 Running Log</h3>
+        <p class="panel-desc">Update weekly totals. Max 5 weeks shown.</p>
+        <div id="run-admin-weeks" style="display:grid;gap:.75rem;margin-bottom:1.25rem"></div>
+        <div class="three-field-row">
+          <div class="fg"><label>Week Label</label><input type="text" id="run-week-inp" placeholder="e.g. Week 4"/></div>
+          <div class="fg"><label>KM</label><input type="number" id="run-km-inp" placeholder="35"/></div>
+          <button class="btn-terra" style="margin-top:1.35rem" onclick="addRunWeek()">Add</button>
+        </div>
+      </div>
+
+      <!-- VIDEO VAULTS (existing) -->
+      <div class="panel">
+        <h3>🗂️ Add New Video Vault Post</h3>
+        <div class="fg"><label>Post Title</label><input type="text" id="np-title" placeholder="e.g. Why We Overthink"/></div>
+        <div class="fg"><label>Short Description</label><textarea id="np-desc" placeholder="What's this carousel about?"></textarea></div>
+        <button class="btn-terra" onclick="addPost()">+ Add Post</button>
+      </div>
+      <div class="panel">
+        <h3>📂 Your Posts</h3>
+        <div class="admin-list" id="admin-list"><p style="font-size:.875rem;color:var(--brown-md);text-align:center;padding:1rem">No posts yet.</p></div>
+      </div>
+    </div>
+    <footer><div class="footer-name">Prasad <em>Sonsale.</em></div><p>Stay Curious.</p></footer>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PASS = 'prasad2024';
+let adminOpen = false, activePost = null;
+
+// ── STORAGE ──────────────────────────────────────────
+function load(){try{return JSON.parse(localStorage.getItem('ps_v4')||'{"posts":[],"articles":[],"photos":[],"runWeeks":[],"liveStatus":{},"rightNow":{},"latestReel":{}}')}catch{return{posts:[],articles:[],photos:[],runWeeks:[],liveStatus:{},rightNow:{},latestReel:{}}}}
+function save(d){localStorage.setItem('ps_v4',JSON.stringify(d))}
+function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')+'-'+Date.now().toString(36)}
+function ytId(url){if(!url)return null;const m=url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);return m?m[1]:null}
+
+// ── NAV SCROLL ────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>40)
+})
+
+// ── TYPEWRITER ────────────────────────────────────────
+const LINES = [
+  'Running 5K every morning without headphones.',
+  'Psychology. Philosophy. Cinema.',
+  'I say things your feed is too polite to say.',
+  'Showing up every single day. Pune, 2026.',
+  'Training for 21.1 km. Race day: July 5.',
+  'The two years ended because I got tired of the numbness.',
+  'So what? Peace.',
+];
+let twLine=0,twChar=0,twDir=1,twTimer;
+const twEl=document.getElementById('typewriter-text');
+function typeStep(){
+  const line=LINES[twLine],cursor='<span class="cursor"></span>';
+  if(twDir===1){
+    twChar++;
+    twEl.innerHTML=line.slice(0,twChar)+cursor;
+    if(twChar>=line.length){twDir=-1;twTimer=setTimeout(typeStep,2200)}
+    else{twTimer=setTimeout(typeStep,52)}
+  } else {
+    twChar--;
+    twEl.innerHTML=line.slice(0,twChar)+cursor;
+    if(twChar<=0){twDir=1;twLine=(twLine+1)%LINES.length;twTimer=setTimeout(typeStep,400)}
+    else{twTimer=setTimeout(typeStep,28)}
+  }
+}
+setTimeout(()=>typeStep(),1400);
+
+// ── DAYS UNTIL RACE ───────────────────────────────────
+function daysUntilDate(dateStr){
+  const target=new Date(dateStr);const now=new Date();
+  now.setHours(0,0,0,0);target.setHours(0,0,0,0);
+  return Math.max(0,Math.ceil((target-now)/(1000*60*60*24)));
+}
+function challengeDayAuto(){
+  const start=new Date('2026-03-01');const now=new Date();
+  now.setHours(0,0,0,0);start.setHours(0,0,0,0);
+  const day=Math.floor((now-start)/(1000*60*60*24))+1;
+  return Math.min(Math.max(1,day),31);
+}
+
+// ── NAVIGATION ────────────────────────────────────────
+function go(view,postSlug){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'))
+  window.scrollTo({top:0,behavior:'smooth'})
+  if(view==='post'&&postSlug){
+    const d=load(),p=d.posts.find(x=>x.slug===postSlug)
+    if(!p){go('posts');return}
+    activePost=p; renderPost(p)
+    document.getElementById('view-post').classList.add('active')
+    history.replaceState(null,'','#post/'+postSlug)
+  } else {
+    const el=document.getElementById('view-'+view)
+    if(el)el.classList.add('active')
+    history.replaceState(null,'','#'+(view==='home'?'':view))
+    if(view==='posts')renderPosts()
+    if(view==='admin'){renderAdmin();fillAdminInputs()}
+    if(view==='home')updateHome()
+  }
+}
+
+window.addEventListener('load',()=>{
+  const h=location.hash.replace('#','')
+  if(!h||h==='home')go('home')
+  else if(h==='posts')go('posts')
+  else if(h==='admin')go('admin')
+  else if(h.startsWith('post/'))go('post',h.replace('post/',''))
+})
+
+// ── UPDATE HOME ───────────────────────────────────────
+function updateHome(){
+  const d=load();
+  // live strip
+  const ls=d.liveStatus||{};
+  const dayNum=ls.day||challengeDayAuto();
+  document.getElementById('ls-day-num').textContent=dayNum;
+  document.getElementById('ls-week').textContent=ls.week||'Week 4';
+  document.getElementById('ls-km').textContent=ls.km||'42';
+  document.getElementById('ls-followers').textContent=ls.followers||'~1K';
+  // right now
+  const rn=d.rightNow||{};
+  if(rn.focus)document.getElementById('rn-focus').innerHTML=rn.focus;
+  if(rn.focusSub)document.getElementById('rn-focus-sub').textContent=rn.focusSub;
+  if(rn.reading)document.getElementById('rn-reading').innerHTML='<em>'+rn.reading+'</em>';
+  if(rn.readingSub)document.getElementById('rn-reading-sub').textContent=rn.readingSub;
+  if(rn.trainingWeek)document.getElementById('rn-training-week').textContent=rn.trainingWeek;
+  // challenge progress
+  const pct=Math.min(100,Math.round((dayNum/31)*100));
+  document.getElementById('rn-prog-fill').style.width=pct+'%';
+  document.getElementById('rn-prog-lbl').textContent=pct+'% complete';
+  document.getElementById('rn-day-num').textContent=dayNum;
+  document.getElementById('rn-focus').innerHTML='Day <em>'+dayNum+'</em> / 31';
+  // quote card stats
+  document.getElementById('qc-videos').textContent=d.posts.reduce((s,p)=>s+(p.videos||[]).length,0);
+  document.getElementById('qc-days').textContent=dayNum;
+  // goal counters
+  if(ls.followers)document.getElementById('gc-followers').textContent=ls.followers;
+  document.getElementById('gc-days-left').textContent=daysUntilDate('2026-12-31');
+  // Race days left auto-calc
+  document.getElementById('ls-race-days').textContent=daysUntilDate('2026-07-05')+' days';
+  // latest reel
+  const lr=d.latestReel||{};
+  if(lr.title)document.getElementById('lr-title').innerHTML=lr.title;
+  if(lr.desc)document.getElementById('lr-desc').textContent=lr.desc;
+  if(lr.views)document.getElementById('lr-views').textContent=lr.views;
+  if(lr.saves)document.getElementById('lr-saves').textContent=lr.saves;
+  if(lr.shares)document.getElementById('lr-shares').textContent=lr.shares;
+  if(lr.embedUrl){
+    document.getElementById('reel-embed-container').innerHTML=
+      '<iframe src="'+lr.embedUrl+'" allowfullscreen scrolling="no" allowtransparency="true"></iframe>';
+  }
+  // articles
+  renderArticles(d);
+  // photos
+  renderPhotos(d);
+  // run log
+  renderRunLog(d);
+}
+
+// ── ARTICLES ──────────────────────────────────────────
+function renderArticles(d){
+  const grid=document.getElementById('articles-grid');
+  const arts=(d.articles||[]).slice(0,3);
+  if(!arts.length){grid.innerHTML='<div class="articles-empty">No articles yet. Add them from the Admin panel.</div>';return}
+  grid.innerHTML=arts.map((a,i)=>`
+    <a class="article-card" href="${a.url||'#'}" target="_blank" rel="noopener">
+      <div class="article-num">No. ${String(i+1).padStart(2,'0')}</div>
+      <div class="article-title">${a.title}</div>
+      ${a.desc?`<div class="article-desc">${a.desc}</div>`:''}
+      <div class="article-meta">${a.date||''}${a.date&&a.url?' · ':''}<span style="color:var(--terra)">Read on Substack →</span></div>
+    </a>
+  `).join('')
+}
+
+// ── PHOTOS ────────────────────────────────────────────
+function renderPhotos(d){
+  const grid=document.getElementById('photo-grid');
+  const photos=d.photos||[];
+  if(!photos.length){grid.innerHTML='<div class="photos-empty">No photos yet. Add photo URLs from the Admin panel.</div>';return}
+  grid.innerHTML=photos.map(p=>`
+    <div class="photo-item">
+      <img src="${p.url}" alt="${p.caption||'Pune'}" loading="lazy" onerror="this.parentElement.style.display='none'"/>
+      ${p.caption?`<div class="photo-item-cap">${p.caption}</div>`:''}
+    </div>
+  `).join('')
+}
+
+// ── RUN LOG ───────────────────────────────────────────
+function renderRunLog(d){
+  const weeks=d.runWeeks||[];
+  const container=document.getElementById('run-weeks-container');
+  if(!weeks.length){container.innerHTML='<div style="color:rgba(247,240,230,.3);font-size:.875rem;font-weight:300">Update weekly running data from the Admin panel.</div>';return}
+  const maxKm=Math.max(...weeks.map(w=>w.km));
+  container.innerHTML=weeks.slice(-5).map(w=>`
+    <div class="run-week">
+      <div class="run-week-label">${w.label}</div>
+      <div class="run-week-bar-wrap"><div class="run-week-bar" style="width:${Math.round((w.km/maxKm)*100)}%"></div></div>
+      <div class="run-week-km">${w.km} km</div>
+    </div>
+  `).join('')
+}
+
+// ── POSTS ─────────────────────────────────────────────
+function renderPosts(){
+  const d=load(),g=document.getElementById('posts-grid')
+  if(!d.posts.length){g.innerHTML=`<div class="empty-state"><div class="ei">📭</div><h3>Nothing here yet</h3><p>Head to Admin to add your first post.</p></div>`;return}
+  g.innerHTML=d.posts.map(p=>`<div class="post-card" onclick="go('post','${p.slug}')">
+    <div>
+      <h3>${p.title}</h3>
+      <div class="post-meta"><span>${p.date}</span><span>${(p.videos||[]).length} video${(p.videos||[]).length!==1?'s':''}</span></div>
+      ${p.desc?`<p class="post-desc">${p.desc}</p>`:''}
+    </div>
+    <div class="vc-badge"><span class="vc-num">${(p.videos||[]).length}</span><span class="vc-lbl">Videos</span></div>
+  </div>`).join('')
+}
+
+function renderPost(p){
+  document.getElementById('post-title').textContent=p.title
+  document.getElementById('post-desc').textContent=p.desc||''
+  const url=location.origin+location.pathname+'#post/'+p.slug
+  document.getElementById('share-url').textContent=url
+  const b=document.getElementById('videos-body')
+  if(!p.videos||!p.videos.length){b.innerHTML=`<div class="empty-state"><div class="ei">📹</div><h3>No videos yet</h3><p>Add them from the Admin panel.</p></div>`;return}
+  b.innerHTML=p.videos.map((v,i)=>{
+    const id=ytId(v.url)
+    return`<div class="video-card">
+      ${id?`<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}" allowfullscreen loading="lazy"></iframe></div>`:''}
+      <div class="video-meta"><h4>${v.title||'Video '+(i+1)}</h4><span class="vnum">#${String(i+1).padStart(2,'0')}</span></div>
+    </div>`
+  }).join('')
+}
+
+function copyLink(){
+  if(!activePost)return
+  navigator.clipboard.writeText(location.origin+location.pathname+'#post/'+activePost.slug).then(()=>toast('Link copied! 🎉'))
+}
+
+// ── ADMIN SAVE FNS ────────────────────────────────────
+function saveLiveStatus(){
+  const d=load();
+  d.liveStatus={
+    day:document.getElementById('ls-day-inp').value||23,
+    week:document.getElementById('ls-week-inp').value||'Week 4',
+    km:document.getElementById('ls-km-inp').value||'42',
+    followers:document.getElementById('ls-followers-inp').value||'~1K'
+  };
+  save(d);updateHome();toast('Live status updated ✦')
+}
+
+function saveRightNow(){
+  const d=load();
+  d.rightNow={
+    reading:document.getElementById('rn-reading-inp').value||'Pu La Deshpande',
+    readingSub:document.getElementById('rn-reading-sub-inp').value,
+    focus:document.getElementById('rn-focus-inp').value,
+    focusSub:document.getElementById('rn-focus-sub-inp').value,
+    trainingWeek:document.getElementById('rn-training-week')?document.getElementById('rn-training-week').textContent:'Week 4'
+  };
+  save(d);updateHome();toast('Right Now updated ✦')
+}
+
+function saveLatestReel(){
+  const d=load();
+  d.latestReel={
+    title:document.getElementById('lr-title-inp').value,
+    desc:document.getElementById('lr-desc-inp').value,
+    embedUrl:document.getElementById('lr-embed-inp').value,
+    views:document.getElementById('lr-views-inp').value,
+    saves:document.getElementById('lr-saves-inp').value,
+    shares:document.getElementById('lr-shares-inp').value
+  };
+  save(d);updateHome();toast('Latest reel updated 🎬')
+}
+
+function addArticle(){
+  const title=document.getElementById('art-title-inp').value.trim();
+  if(!title){toast('Add a title first');return}
+  const d=load();
+  d.articles.unshift({
+    title,
+    desc:document.getElementById('art-desc-inp').value.trim(),
+    date:document.getElementById('art-date-inp').value.trim(),
+    url:document.getElementById('art-url-inp').value.trim()
+  });
+  save(d);
+  document.getElementById('art-title-inp').value='';
+  document.getElementById('art-desc-inp').value='';
+  document.getElementById('art-date-inp').value='';
+  document.getElementById('art-url-inp').value='';
+  renderArticlesAdmin(d);updateHome();toast('Article added ✍️')
+}
+
+function deleteArticle(i){
+  const d=load();d.articles.splice(i,1);save(d);renderArticlesAdmin(d);updateHome();toast('Removed')
+}
+
+function renderArticlesAdmin(d){
+  const el=document.getElementById('articles-admin-list');
+  if(!(d.articles||[]).length){el.innerHTML='';return}
+  el.innerHTML=d.articles.map((a,i)=>`
+    <div class="vi-row">
+      <span class="vi-n">#${i+1}</span>
+      <span class="vi-t">${a.title}</span>
+      <button class="icon-btn del" onclick="deleteArticle(${i})">×</button>
+    </div>`).join('')
+}
+
+function addPhoto(){
+  const url=document.getElementById('photo-url-inp').value.trim();
+  if(!url){toast('Paste an image URL');return}
+  const d=load();
+  d.photos.push({url,caption:document.getElementById('photo-cap-inp').value.trim()});
+  save(d);
+  document.getElementById('photo-url-inp').value='';
+  document.getElementById('photo-cap-inp').value='';
+  renderPhotosAdmin(d);updateHome();toast('Photo added 📷')
+}
+
+function deletePhoto(i){
+  const d=load();d.photos.splice(i,1);save(d);renderPhotosAdmin(d);updateHome();toast('Removed')
+}
+
+function renderPhotosAdmin(d){
+  const el=document.getElementById('photos-admin-list');
+  if(!(d.photos||[]).length){el.innerHTML='';return}
+  el.innerHTML=d.photos.map((p,i)=>`
+    <div class="vi-row">
+      <span class="vi-n">#${i+1}</span>
+      <span class="vi-t">${p.caption||p.url}</span>
+      <button class="icon-btn del" onclick="deletePhoto(${i})">×</button>
+    </div>`).join('')
+}
+
+function addRunWeek(){
+  const label=document.getElementById('run-week-inp').value.trim();
+  const km=parseFloat(document.getElementById('run-km-inp').value)||0;
+  if(!label){toast('Add a week label');return}
+  const d=load();
+  d.runWeeks.push({label,km});
+  save(d);
+  document.getElementById('run-week-inp').value='';
+  document.getElementById('run-km-inp').value='';
+  renderRunAdmin(d);updateHome();toast('Run week added 🏃')
+}
+
+function deleteRunWeek(i){
+  const d=load();d.runWeeks.splice(i,1);save(d);renderRunAdmin(d);updateHome();toast('Removed')
+}
+
+function renderRunAdmin(d){
+  const el=document.getElementById('run-admin-weeks');
+  if(!(d.runWeeks||[]).length){el.innerHTML='';return}
+  el.innerHTML=d.runWeeks.map((w,i)=>`
+    <div class="vi-row">
+      <span class="vi-n">${w.label}</span>
+      <span class="vi-t">${w.km} km</span>
+      <button class="icon-btn del" onclick="deleteRunWeek(${i})">×</button>
+    </div>`).join('')
+}
+
+// ── FILL ADMIN INPUTS ─────────────────────────────────
+function fillAdminInputs(){
+  const d=load();
+  const ls=d.liveStatus||{};
+  document.getElementById('ls-day-inp').value=ls.day||'';
+  document.getElementById('ls-week-inp').value=ls.week||'Week 4';
+  document.getElementById('ls-km-inp').value=ls.km||42;
+  document.getElementById('ls-followers-inp').value=ls.followers||'~1K';
+  const rn=d.rightNow||{};
+  document.getElementById('rn-reading-inp').value=rn.reading||'';
+  document.getElementById('rn-reading-sub-inp').value=rn.readingSub||'';
+  document.getElementById('rn-focus-inp').value=rn.focus||'';
+  document.getElementById('rn-focus-sub-inp').value=rn.focusSub||'';
+  const lr=d.latestReel||{};
+  document.getElementById('lr-title-inp').value=lr.title||'';
+  document.getElementById('lr-desc-inp').value=lr.desc||'';
+  document.getElementById('lr-embed-inp').value=lr.embedUrl||'';
+  document.getElementById('lr-views-inp').value=lr.views||'';
+  document.getElementById('lr-saves-inp').value=lr.saves||'';
+  document.getElementById('lr-shares-inp').value=lr.shares||'';
+  renderArticlesAdmin(d);
+  renderPhotosAdmin(d);
+  renderRunAdmin(d);
+}
+
+// ── VIDEO VAULTS (existing) ───────────────────────────
+function unlock(){
+  if(document.getElementById('admin-pw').value===PASS){
+    adminOpen=true
+    document.getElementById('admin-lock').style.display='none'
+    document.getElementById('admin-content').style.display='block'
+    renderAdmin();fillAdminInputs()
+  } else {toast('Wrong password');document.getElementById('admin-pw').value=''}
+}
+
+function renderAdmin(){
+  if(!adminOpen)return
+  const d=load(),l=document.getElementById('admin-list')
+  if(!d.posts.length){l.innerHTML=`<p style="font-size:.875rem;color:var(--brown-md);text-align:center;padding:1rem">No posts yet. Add one above!</p>`;return}
+  l.innerHTML=d.posts.map((p,pi)=>`<div class="apc">
+    <div class="apc-head" onclick="toggleExp(${pi})">
+      <span class="apc-title">${p.title}</span>
+      <div class="apc-actions">
+        <button class="icon-btn" onclick="event.stopPropagation();go('post','${p.slug}')" title="Preview">👁</button>
+        <button class="icon-btn del" onclick="event.stopPropagation();deletePost(${pi})" title="Delete">🗑</button>
+        <span id="ch-${pi}" style="font-size:.7rem;color:var(--brown-md)">▼</span>
+      </div>
+    </div>
+    <div class="apc-body" id="exp-${pi}">
+      <div>${!(p.videos||[]).length?'<p style="font-size:.8rem;color:var(--brown-md)">No videos yet.</p>':p.videos.map((v,vi)=>`<div class="vi-row"><span class="vi-n">#${vi+1}</span><span class="vi-t">${v.title||v.url}</span><button class="icon-btn del" onclick="deleteVideo(${pi},${vi})">×</button></div>`).join('')}</div>
+      <div class="add-video-row">
+        <div class="fg"><label>Video Title</label><input type="text" id="vt-${pi}" placeholder="e.g. Robert Sapolsky on stress"/></div>
+        <div class="fg"><label>YouTube URL</label><input type="text" id="vu-${pi}" placeholder="https://youtu.be/…"/></div>
+        <button class="btn-terra btn-sm" onclick="addVideo(${pi})" style="margin-top:1.35rem">Add</button>
+      </div>
+      <div class="share-row-admin">
+        <small>Share link:</small>
+        <code>#post/${p.slug}</code>
+        <button class="copy-btn" style="padding:.3rem .9rem;font-size:.7rem" onclick="copyPostLink('${p.slug}')">Copy</button>
+      </div>
+    </div>
+  </div>`).join('')
+}
+
+function toggleExp(i){
+  const b=document.getElementById('exp-'+i),c=document.getElementById('ch-'+i)
+  b.classList.toggle('open');c.textContent=b.classList.contains('open')?'▲':'▼'
+}
+
+function addPost(){
+  const title=document.getElementById('np-title').value.trim(),desc=document.getElementById('np-desc').value.trim()
+  if(!title){toast('Add a title first');return}
+  const d=load()
+  d.posts.unshift({title,desc,slug:slug(title),date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}),videos:[]})
+  save(d);document.getElementById('np-title').value='';document.getElementById('np-desc').value=''
+  renderAdmin();updateHome();toast('Post added! ✦')
+}
+
+function deletePost(i){
+  if(!confirm('Delete this post and all its videos?'))return
+  const d=load();d.posts.splice(i,1);save(d);renderAdmin();updateHome();toast('Post deleted')
+}
+
+function addVideo(pi){
+  const title=document.getElementById('vt-'+pi).value.trim(),url=document.getElementById('vu-'+pi).value.trim()
+  if(!url){toast('Paste a YouTube URL');return}
+  const d=load();if(!d.posts[pi].videos)d.posts[pi].videos=[]
+  d.posts[pi].videos.push({title:title||'Untitled Video',url})
+  save(d);document.getElementById('vt-'+pi).value='';document.getElementById('vu-'+pi).value=''
+  renderAdmin();updateHome();toast('Video added 🎬')
+}
+
+function deleteVideo(pi,vi){
+  const d=load();d.posts[pi].videos.splice(vi,1);save(d);renderAdmin();updateHome();toast('Removed')
+}
+
+function copyPostLink(s){
+  navigator.clipboard.writeText(location.origin+location.pathname+'#post/'+s).then(()=>toast('Link copied! 🎉'))
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show')
+  setTimeout(()=>t.classList.remove('show'),2500)
+}
+
+updateHome()
+</script>
+</body>
+</html>
